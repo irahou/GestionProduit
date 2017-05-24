@@ -1,3 +1,6 @@
+<%@page import="metier.ProduitMetier"%>
+<%@page import="java.util.Iterator"%>
+<%@page import="web.ProduitBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -7,9 +10,15 @@
 <title>Gestion des produits</title>
 </head>
 <body>
+	<%	ProduitBean produits ;
+	if(request.getAttribute("model")== null)
+		produits = new ProduitBean();
+	else
+		 produits = (ProduitBean)request.getAttribute("model");
+	%>
 	<h2>Tuto J2EE</h2>
 	<h4>Ajouter un nouveau produit</h4>
-	<form action="" method="post">
+	<form action="AfficherInfo" method="post">
 	<table border="1" width="50%">
 		<tr>
 			<td>Nom:</td>
@@ -32,5 +41,29 @@
 		</tr>
 	</table>
 	</form>
+	<table border="1" width="60%">
+		<tr>
+			<th>Id</th>
+			<th>Nom</th>
+			<th>Description</th>
+			<th>Prix</th>
+			<th>Etat</th>
+		</tr>
+		<%
+		 Iterator<ProduitMetier> ip = produits.getVp().iterator();
+		while(ip.hasNext()){
+			ProduitMetier p = ip.next();
+		
+		%>
+		
+		<tr>
+			<th><%=p.getId()%></th>
+			<th><%=p.getNom() %></th>
+			<th><%=p.getDesc() %></th>
+			<th><%=p.getPrix() %></th>
+			<th><%=p.getEtat() %></th>
+		</tr>
+	<% }%>
+	</table>
 </body>
 </html>
